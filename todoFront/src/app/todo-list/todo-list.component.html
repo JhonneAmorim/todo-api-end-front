@@ -7,15 +7,21 @@
             <div class="card">
                 <h2 class="card-header">Tarefas</h2>
                 <ul class="list-group list-group-flush">
-                    <li class="list-group-item" *ngFor="let todo of todos">
+                    <li class="list-group-item" *ngFor="let todo of todos; let i = index">
                         <div *ngIf="editingTodo?.id !== todo.id">
-                            {{ todo.name }}
-                            <button class="btn btn-primary" (click)="startEditing(todo)">Editar</button>
-                            <button class="btn btn-danger" (click)="deleteTodoItem(todo)">Deletar</button>
+                            <input type="checkbox" id="todoCompleted{{i}}" name="todoCompleted{{i}}"
+                                [(ngModel)]="todo.completed" (change)="updateTodoItem(todo)">
+                            <span [ngStyle]="{'text-decoration': todo.completed ? 'line-through' : 'none'}">{{ todo.name
+                                }}</span>
+                            <button class="btn btn-primary" *ngIf="!todo.completed"
+                                (click)="startEditing(todo)">Editar</button>
+                            <button class="btn btn-danger" *ngIf="!todo.completed"
+                                (click)="deleteTodoItem(todo)">Deletar</button>
                         </div>
                         <div *ngIf="editingTodo?.id === todo.id">
                             <form *ngIf="editingTodo" (ngSubmit)="editTodoItem(editingTodo)">
-                                <input [(ngModel)]="editingTodo.name" name="name">
+                                <input id="todoName{{i}}" name="todoName{{i}}" [(ngModel)]="editingTodo.name"
+                                    autocomplete="off">
                                 <button type="submit">Salvar</button>
                                 <button type="button" (click)="cancelEditing()">Cancelar</button>
                             </form>

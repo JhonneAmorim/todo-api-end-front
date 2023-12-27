@@ -4,6 +4,7 @@ import { TodoService } from '../todo.service';
 export interface Todo {
   id: number;
   name: string;
+  completed: boolean;
 }
 
 @Component({
@@ -30,6 +31,17 @@ export class TodoListComponent implements OnInit {
   addTodoItem(newTodo: Todo): void {
     this.todoService.addTodoItem(newTodo).subscribe(() => {
       this.getTodos();
+    });
+  }
+
+  updateTodoItem(todo: Todo): void {
+    this.todoService.updateTodoItem(todo).subscribe(updatedTodo => {
+        if (updatedTodo) {
+            const index = this.todos.findIndex(t => t.id === updatedTodo.id);
+            if (index !== -1) {
+                this.todos[index] = updatedTodo;
+            }
+        }
     });
   }
 

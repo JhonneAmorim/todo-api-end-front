@@ -46,7 +46,16 @@ namespace TodoApi.Controllers
                 return BadRequest();
             }
 
-            _context.Entry(todoItem).State = EntityState.Modified;
+            var todoItemToUpdate = await _context.TodoItems.FindAsync(id);
+
+            if (todoItemToUpdate == null)
+            {
+                return NotFound();
+            }
+
+            todoItemToUpdate.Name = todoItem.Name;
+            todoItemToUpdate.IsComplete = todoItem.IsComplete;
+
             await _context.SaveChangesAsync();
 
             return NoContent();
