@@ -1,0 +1,28 @@
+<div class="container">
+    <div class="row">
+        <div class="half">
+            <app-todo-form (todoAdded)="getTodos()"></app-todo-form>
+        </div>
+        <div class="half">
+            <div class="card">
+                <h2 class="card-header">Tarefas</h2>
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item" *ngFor="let todo of todos">
+                        <div *ngIf="editingTodo?.id !== todo.id">
+                            {{ todo.name }}
+                            <button class="btn btn-primary" (click)="startEditing(todo)">Editar</button>
+                            <button class="btn btn-danger" (click)="deleteTodoItem(todo)">Deletar</button>
+                        </div>
+                        <div *ngIf="editingTodo?.id === todo.id">
+                            <form *ngIf="editingTodo" (ngSubmit)="editTodoItem(editingTodo)">
+                                <input [(ngModel)]="editingTodo.name" name="name">
+                                <button type="submit">Salvar</button>
+                                <button type="button" (click)="cancelEditing()">Cancelar</button>
+                            </form>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>

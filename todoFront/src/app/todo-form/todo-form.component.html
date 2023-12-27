@@ -1,0 +1,13 @@
+<div class="card">
+    <h2 class="card-header">Adicionar Tarefa</h2>
+    <div class="card-body">
+        <form (ngSubmit)="onSubmit(todoForm)" #todoForm="ngForm">
+            <div class="form-group">
+                <label for="title">Descreva sua tarefa</label>
+                <input type="text" class="form-control" id="title" required [(ngModel)]="todo.name" name="name">
+            </div>
+
+            <button type="submit" class="btn btn-success">Salvar</button>
+        </form>
+    </div>
+</div>
